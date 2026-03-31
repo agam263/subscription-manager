@@ -1,13 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const dotenv = require('dotenv');
+
+// Load environment variables from standard server/.env and root .env
+dotenv.config();
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
+
+console.log("NVIDIA_API_KEY loaded:", process.env.NVIDIA_API_KEY ? "YES" : "NO");
+
 const ExchangeRateScheduler = require('./services/exchangeRateScheduler');
 const SubscriptionRenewalScheduler = require('./services/subscriptionRenewalScheduler');
 const NotificationScheduler = require('./services/notificationScheduler');
-
-// Load environment variables from root .env file (unified configuration)
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
-
 // Import modules
 const { initializeDatabase } = require('./config/database');
 const { createSessionMiddleware } = require('./middleware/session');
@@ -28,6 +32,7 @@ const { createSchedulerRoutes, createProtectedSchedulerRoutes } = require('./rou
 const userPreferencesRoutes = require('./routes/userPreferences');
 const templatesRoutes = require('./routes/templates');
 const createAuthRoutes = require('./routes/auth');
+const createChatRoutes = require('./routes/chatRoutes');
 
 const app = express();
 const port = process.env.PORT || 3001; // Use PORT from environment or default to 3001
@@ -81,6 +86,9 @@ const protectedApiRouter = express.Router();
 
 // Auth routes (no login required)
 app.use('/api/auth', createAuthRoutes(db));
+
+// Public Chatbot Route (No login required to talk to bot)
+app.use('/api/chat', createChatRoutes());
 
 // Apply session auth to all API routes
 apiRouter.use(requireLogin);
