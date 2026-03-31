@@ -1,6 +1,6 @@
 # Subscription Management System
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+[English](README.md)
 
 A modern subscription management system that helps users easily manage and track expenses and renewals for various subscription services.
 
