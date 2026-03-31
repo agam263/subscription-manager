@@ -1,13 +1,4 @@
-Here is a complete, ready-to-paste README.md code file for your GitHub repository.
-Just copy everything below into a file named:
-
-README.md
-
-
-⸻
-
-
-# 🚀 SubManager — Smart Subscription Management System
+#  SubManager — Smart Subscription Management System
 
 **SubManager** is a modern full-stack web application that helps users track, manage, and analyze their subscription expenses efficiently.  
 It provides real-time insights, renewal reminders, and notification tracking through Email and Telegram integrations.
