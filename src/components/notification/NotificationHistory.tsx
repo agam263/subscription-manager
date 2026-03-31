@@ -310,20 +310,20 @@ export const NotificationHistory: React.FC = () => {
       {/* Statistics Cards */}
       {stats && (
         <div className="grid gap-4 md:grid-cols-4">
-          <Card className="group relative transition-all duration-300 hover:scale-[1.02] border-purple-500/20 bg-zinc-950 bg-gradient-to-br from-zinc-950 via-zinc-950 to-purple-500/20 text-slate-100 shadow-[inset_0_0_12px_rgba(168,85,247,0.15)] hover:shadow-[inset_0_0_25px_rgba(168,85,247,0.35)]">
+          <Card className="group relative transition-all duration-300 hover:scale-[1.02] border-border/50 dark:border-purple-500/20 bg-background dark:bg-zinc-950 bg-gradient-to-br from-background via-background dark:from-zinc-950 dark:via-zinc-950 to-purple-500/5 dark:to-purple-500/20 text-foreground shadow-sm dark:shadow-[inset_0_0_12px_rgba(168,85,247,0.15)] dark:hover:shadow-[inset_0_0_25px_rgba(168,85,247,0.35)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-200">{t('stats.total')}</CardTitle>
-              <BarChart3 className="h-4 w-4 text-purple-400 group-hover:text-purple-300 transition-colors" />
+              <CardTitle className="text-sm font-medium text-muted-foreground">{t('stats.total')}</CardTitle>
+              <BarChart3 className="h-4 w-4 text-purple-600 dark:text-purple-400 group-hover:text-purple-500 dark:group-hover:text-purple-300 transition-colors" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.total}</div>
             </CardContent>
           </Card>
 
-          <Card className="group relative transition-all duration-300 hover:scale-[1.02] border-green-500/20 bg-zinc-950 bg-gradient-to-br from-zinc-950 via-zinc-950 to-green-500/20 text-slate-100 shadow-[inset_0_0_12px_rgba(34,197,94,0.15)] hover:shadow-[inset_0_0_25px_rgba(34,197,94,0.35)]">
+          <Card className="group relative transition-all duration-300 hover:scale-[1.02] border-border/50 dark:border-green-500/20 bg-background dark:bg-zinc-950 bg-gradient-to-br from-background via-background dark:from-zinc-950 dark:via-zinc-950 to-green-500/5 dark:to-green-500/20 text-foreground shadow-sm dark:shadow-[inset_0_0_12px_rgba(34,197,94,0.15)] dark:hover:shadow-[inset_0_0_25px_rgba(34,197,94,0.35)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-200">{t('stats.sent')}</CardTitle>
-              <CheckCircle className="h-4 w-4 text-green-400 group-hover:text-green-300 transition-colors" />
+              <CardTitle className="text-sm font-medium text-muted-foreground">{t('stats.sent')}</CardTitle>
+              <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400 group-hover:text-green-500 dark:group-hover:text-green-300 transition-colors" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-400">{stats.sent}</div>
@@ -333,20 +333,20 @@ export const NotificationHistory: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="group relative transition-all duration-300 hover:scale-[1.02] border-red-500/20 bg-zinc-950 bg-gradient-to-br from-zinc-950 via-zinc-950 to-red-500/20 text-slate-100 shadow-[inset_0_0_12px_rgba(239,68,68,0.15)] hover:shadow-[inset_0_0_25px_rgba(239,68,68,0.35)]">
+          <Card className="group relative transition-all duration-300 hover:scale-[1.02] border-border/50 dark:border-red-500/20 bg-background dark:bg-zinc-950 bg-gradient-to-br from-background via-background dark:from-zinc-950 dark:via-zinc-950 to-red-500/5 dark:to-red-500/20 text-foreground shadow-sm dark:shadow-[inset_0_0_12px_rgba(239,68,68,0.15)] dark:hover:shadow-[inset_0_0_25px_rgba(239,68,68,0.35)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-200">{t('stats.failed')}</CardTitle>
-              <XCircle className="h-4 w-4 text-red-400 group-hover:text-red-300 transition-colors" />
+              <CardTitle className="text-sm font-medium text-muted-foreground">{t('stats.failed')}</CardTitle>
+              <XCircle className="h-4 w-4 text-red-600 dark:text-red-400 group-hover:text-red-500 dark:group-hover:text-red-300 transition-colors" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-400">{stats.failed}</div>
             </CardContent>
           </Card>
 
-          <Card className="group relative transition-all duration-300 hover:scale-[1.02] border-blue-500/20 bg-zinc-950 bg-gradient-to-br from-zinc-950 via-zinc-950 to-blue-500/20 text-slate-100 shadow-[inset_0_0_12px_rgba(59,130,246,0.15)] hover:shadow-[inset_0_0_25px_rgba(59,130,246,0.35)]">
+          <Card className="group relative transition-all duration-300 hover:scale-[1.02] border-border/50 dark:border-blue-500/20 bg-background dark:bg-zinc-950 bg-gradient-to-br from-background via-background dark:from-zinc-950 dark:via-zinc-950 to-blue-500/5 dark:to-blue-500/20 text-foreground shadow-sm dark:shadow-[inset_0_0_12px_rgba(59,130,246,0.15)] dark:hover:shadow-[inset_0_0_25px_rgba(59,130,246,0.35)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-200">{t('stats.successRate')}</CardTitle>
-              <BarChart3 className="h-4 w-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
+              <CardTitle className="text-sm font-medium text-muted-foreground">{t('stats.successRate')}</CardTitle>
+              <BarChart3 className="h-4 w-4 text-blue-600 dark:text-blue-400 group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-blue-400">
@@ -377,10 +377,10 @@ export const NotificationHistory: React.FC = () => {
           </div>
 
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="rounded-full bg-foreground/5 dark:bg-foreground/5 border-foreground/10 backdrop-blur-md">
+            <SelectTrigger className="rounded-full bg-background dark:bg-foreground/5 border-border/50 backdrop-blur-md">
               <SelectValue placeholder={t('history.statusFilter')} />
             </SelectTrigger>
-            <SelectContent className="rounded-2xl bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-white/20">
+            <SelectContent className="rounded-2xl bg-background/95 dark:bg-zinc-900/80 backdrop-blur-xl border-border/50 dark:border-white/20">
               <SelectItem value="all">{t('history.allStatuses')}</SelectItem>
               {allStatuses.map(status => (
                 <SelectItem key={status} value={status}>
@@ -391,10 +391,10 @@ export const NotificationHistory: React.FC = () => {
           </Select>
 
           <Select value={typeFilter} onValueChange={setTypeFilter}>
-            <SelectTrigger className="rounded-full bg-foreground/5 dark:bg-foreground/5 border-foreground/10 backdrop-blur-md">
+            <SelectTrigger className="rounded-full bg-background dark:bg-foreground/5 border-border/50 backdrop-blur-md">
               <SelectValue placeholder={t('history.typeFilter')} />
             </SelectTrigger>
-            <SelectContent className="rounded-2xl bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-white/20">
+            <SelectContent className="rounded-2xl bg-background/95 dark:bg-zinc-900/80 backdrop-blur-xl border-border/50 dark:border-white/20">
               <SelectItem value="all">{t('history.allTypes')}</SelectItem>
               {allTypes.map(type => (
                 <SelectItem key={type} value={type}>
@@ -405,10 +405,10 @@ export const NotificationHistory: React.FC = () => {
           </Select>
 
           <Select value={channelFilter} onValueChange={setChannelFilter}>
-            <SelectTrigger className="rounded-full bg-foreground/5 dark:bg-foreground/5 border-foreground/10 backdrop-blur-md">
+            <SelectTrigger className="rounded-full bg-background dark:bg-foreground/5 border-border/50 backdrop-blur-md">
               <SelectValue placeholder={t('history.channelFilter')} />
             </SelectTrigger>
-            <SelectContent className="rounded-2xl bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-white/20">
+            <SelectContent className="rounded-2xl bg-background/95 dark:bg-zinc-900/80 backdrop-blur-xl border-border/50 dark:border-white/20">
               <SelectItem value="all">{t('history.allChannels')}</SelectItem>
               {allChannels.map(channel => (
                 <SelectItem key={channel} value={channel}>
@@ -478,7 +478,7 @@ export const NotificationHistory: React.FC = () => {
                 return (
                   <div
                     key={item.id}
-                    className="group relative overflow-hidden rounded-[20px] bg-white/40 dark:bg-zinc-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.1)] hover:shadow-[0_8px_30px_rgba(168,85,247,0.15)] transition-all duration-300"
+                    className="group relative overflow-hidden rounded-[20px] bg-background/60 dark:bg-zinc-900/40 backdrop-blur-md border border-border dark:border-white/10 shadow-sm dark:shadow-[0_8px_30px_rgb(0,0,0,0.1)] hover:shadow-md dark:hover:shadow-[0_8px_30px_rgba(168,85,247,0.15)] transition-all duration-300"
                   >
                     {/* Header - always visible */}
                     <div
@@ -520,7 +520,7 @@ export const NotificationHistory: React.FC = () => {
                     {/* Expanded content */}
                     <div className={`grid transition-all duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                       <div className="overflow-hidden">
-                        <div className="px-6 pb-6 pt-2 border-t border-black/5 dark:border-white/10 bg-white/20 dark:bg-black/20 backdrop-blur-md">
+                        <div className="px-6 pb-6 pt-2 border-t border-border/50 dark:border-white/10 bg-background/40 dark:bg-black/20 backdrop-blur-md">
                           <div className="pt-3 space-y-3">
                             {/* Badges for channel on expanded info on desktop */}
                             <div className="hidden md:flex gap-2 mb-4">

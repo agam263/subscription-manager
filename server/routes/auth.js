@@ -15,7 +15,8 @@ function createAuthRoutes(db) {
 
             const adminUser = await adminUserManager.ensureAdminUser();
 
-            if (!adminUser || adminUser.username !== username) {
+            const inputUsername = typeof username === 'string' ? username.trim().toLowerCase() : '';
+            if (!adminUser || adminUser.username.toLowerCase() !== inputUsername) {
                 return res.status(401).json({ message: 'Invalid credentials' });
             }
 

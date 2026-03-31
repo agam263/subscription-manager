@@ -91,6 +91,9 @@ export default function LoginPage() {
                   value={username} 
                   onChange={(e) => setUsername(e.target.value)} 
                   autoFocus 
+                  autoCapitalize="none"
+                  autoComplete="username"
+                  autoCorrect="off"
                   className="bg-black/20 border-white/10 text-white placeholder-white/40 focus-visible:ring-purple-500/50 focus-visible:border-purple-500/50 h-12 rounded-xl"
                 />
               </div>
