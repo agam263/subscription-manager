@@ -9,7 +9,6 @@ import { useToast } from "@/hooks/use-toast"
 import { useTranslation } from "react-i18next"
 import { MagneticButton } from "@/components/ui/magnetic-button"
 import LaserFlow from "@/components/LaserFlow"
-import PixelSnow from "@/components/PixelSnow"
 
 // Helper function to safely extract error message
 const getErrorMessage = (error: unknown): string => {
@@ -193,39 +192,26 @@ function HomePage() {
   return (
     <>
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-60">
-        <PixelSnow
-          color="#ffffff"
-          flakeSize={0.01}
-          minFlakeSize={1.25}
-          pixelResolution={200}
-          speed={1.25}
-          depthFade={8}
-          farPlane={20}
-          brightness={1}
-          gamma={0.4545}
-          density={0.3}
-          variant="square"
-          direction={125}
+        <LaserFlow
+          color="#FF79C6"
+          wispDensity={2}
+          flowSpeed={0.35}
+          verticalSizing={2}
+          horizontalSizing={3}
+          fogIntensity={0.75}
+          fogScale={0.3}
+          wispSpeed={15}
+          wispIntensity={5}
+          flowStrength={0.25}
+          decay={1.1}
+          horizontalBeamOffset={0}
+          verticalBeamOffset={-0.5}
         />
       </div>
 
       <div className="relative z-10">
         {/* Immersive Dashboard Header */}
       <div className="relative w-full h-[260px] flex items-center justify-center overflow-hidden rounded-[16px] mb-8 bg-black">
-        <div className="absolute inset-0 z-0">
-          <LaserFlow
-            color="#3B82F6"
-            wispDensity={1.4}
-            flowSpeed={0.35}
-            verticalSizing={2.2}
-            horizontalSizing={2}
-            fogIntensity={0.35}
-            glowIntensity={0.6}
-            noiseScale={0.9}
-            distortion={0.4}
-            backgroundColor="#000000"
-          />
-        </div>
 
         <MagneticButton
           onClick={handleRefreshWithRenewals}
