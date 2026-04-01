@@ -388,9 +388,8 @@ export function OptionsManager() {
           </TabsTrigger>
         </TabsList>
 
-        <AnimatePresence mode="wait">
-          <TabsContent value="categories" className="mt-0" forceMount>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+        <TabsContent value="categories" className="mt-0">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
               <Card className="border-foreground/10 bg-background/40 backdrop-blur-xl shadow-lg relative overflow-hidden group/card">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none opacity-50 transition-opacity group-hover/card:opacity-100" />
                 <CardHeader className="relative z-10 border-b border-foreground/5 bg-foreground/[0.02]">
@@ -434,8 +433,8 @@ export function OptionsManager() {
             </motion.div>
           </TabsContent>
 
-          <TabsContent value="payment-methods" className="mt-0" forceMount>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+          <TabsContent value="payment-methods" className="mt-0">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
               <Card className="border-foreground/10 bg-background/40 backdrop-blur-xl shadow-lg relative overflow-hidden group/card">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none opacity-50 transition-opacity group-hover/card:opacity-100" />
                 <CardHeader className="relative z-10 border-b border-foreground/5 bg-foreground/[0.02]">
@@ -478,8 +477,7 @@ export function OptionsManager() {
               </Card>
             </motion.div>
           </TabsContent>
-        </AnimatePresence>
-      </Tabs>
+        </Tabs>
 
       {/* Edit Dialog */}
       <EditDialog
