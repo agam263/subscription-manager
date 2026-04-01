@@ -207,8 +207,18 @@ export function SettingsPage() {
   }
 
   return (
-    <>
-      <div className="flex items-center justify-between pb-4">
+    <div className="settings-page-wrapper">
+      <style>{`
+        .settings-page-wrapper [data-card] {
+          background-color: hsl(var(--card)) !important;
+          backdrop-filter: none !important;
+          border: 1px solid hsl(var(--border)) !important;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+          border-radius: var(--radius) !important;
+        }
+      `}</style>
+
+      <div className="flex items-center justify-between pb-4 relative z-10 bg-background/80 p-4 rounded-xl backdrop-blur-md mb-6 border border-border/50">
         <h2 className="text-3xl font-bold tracking-tight">{t('title')}</h2>
       </div>
 
@@ -460,6 +470,6 @@ export function SettingsPage() {
         onClose={() => setIsResetModalOpen(false)}
         onResetComplete={handleResetData}
       />
-    </>
+    </div>
   )
 }
