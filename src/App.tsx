@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { useAuthStore } from '@/store/authStore'
 import { Navigate } from 'react-router-dom'
 import ClickSpark from './components/ClickSpark'
+import BackgroundAnimation from './components/BackgroundAnimation'
 import CollegeBotChat from './components/CollegeBotChat'
 
 // Lazy load pages for code splitting
@@ -35,6 +36,7 @@ function App() {
   
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <BackgroundAnimation />
       <ClickSpark
         sparkColor="#fff"
         sparkSize={10}
