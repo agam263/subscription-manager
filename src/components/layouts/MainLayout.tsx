@@ -86,7 +86,8 @@ export function MainLayout({ children }: MainLayoutProps) {
             <LanguageSwitcher />
             <ModeToggle />
             {user && (
-              <>
+              <div className="flex items-center gap-4 ml-2">
+                <span className="hidden md:inline font-semibold text-sm opacity-80 pl-2 border-l border-white/20">{user.name || user.username}</span>
                 <UIButton
                   variant="ghost"
                   size="sm"
@@ -103,7 +104,7 @@ export function MainLayout({ children }: MainLayoutProps) {
                 >
                   <LogOut className="h-5 w-5" />
                 </UIButton>
-              </>
+              </div>
             )}
           </div>
         </div>
