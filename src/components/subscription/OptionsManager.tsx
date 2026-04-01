@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion, AnimatePresence, Variants } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -9,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { useConfirmation } from '@/hooks/use-confirmation'
 
-import { Trash2, Edit, Plus } from 'lucide-react'
+import { Trash2, Edit, Plus, Layers, CreditCard, Tag } from 'lucide-react'
 import { useSubscriptionStore } from '@/store/subscriptionStore'
 import { useToast } from '@/hooks/use-toast'
 
@@ -24,8 +25,25 @@ function generateValue(label: string): string {
     .replace(/\s+/g, '-') // Replace whitespace with hyphens
     .replace(/[^-\p{L}\p{N}]/gu, '') // Keep letters/numbers (including CJK) and hyphens
 
-  // Ensure we always return a non-empty value for API usage
   return sanitized || `option-${Date.now()}`
+}
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 }
+  }
+}
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.95, y: 15 },
+  visible: { 
+    opacity: 1, 
+    scale: 1, 
+    y: 0,
+    transition: { type: "spring", stiffness: 350, damping: 25 }
+  }
 }
 
 interface EditDialogProps {
@@ -40,6 +58,13 @@ function EditDialog({ open, onOpenChange, title, currentLabel, onSave }: EditDia
   const { t } = useTranslation(['common', 'settings'])
   const [name, setName] = useState(currentLabel)
 
+  // Update internal state when dialog opens with a new label
+  useEffect(() => {
+    if (open) {
+      setName(currentLabel)
+    }
+  }, [open, currentLabel])
+
   const handleSave = () => {
     if (name.trim()) {
       onSave(name.trim())
@@ -49,21 +74,26 @@ function EditDialog({ open, onOpenChange, title, currentLabel, onSave }: EditDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t('settings:editOptionTitle', { type: title })}</DialogTitle>
           <DialogDescription>
             {t('settings:editOptionDesc', { type: title.toLowerCase() })}
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="name">{t('common:name')}</Label>
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="edit-name">{t('common:name')}</Label>
             <Input
-              id="name"
+              id="edit-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={t('settings:enterNamePlaceholder', { type: title.toLowerCase() })}
+              className="bg-background/50"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && name.trim()) handleSave()
+              }}
             />
           </div>
         </div>
@@ -72,7 +102,7 @@ function EditDialog({ open, onOpenChange, title, currentLabel, onSave }: EditDia
             {t('common:cancel')}
           </Button>
           <Button onClick={handleSave} disabled={!name.trim()}>
-            {t('common:save')} {t('common:update')}
+            {t('common:save')}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -91,31 +121,39 @@ function AddDialog({ open, onOpenChange, title, onAdd }: AddDialogProps) {
   const { t } = useTranslation(['common', 'settings'])
   const [name, setName] = useState('')
 
+  useEffect(() => {
+    if (open) setName('')
+  }, [open])
+
   const handleAdd = () => {
     if (name.trim()) {
       onAdd(name.trim())
-      setName('')
       onOpenChange(false)
     }
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t('settings:addOptionTitle', { type: title })}</DialogTitle>
           <DialogDescription>
             {t('settings:addOptionDesc', { type: title.toLowerCase() })}
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="new-name">{t('common:name')}</Label>
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="add-name">{t('common:name')}</Label>
             <Input
-              id="new-name"
+              id="add-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={t('settings:enterNamePlaceholder', { type: title.toLowerCase() })}
+              className="bg-background/50"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && name.trim()) handleAdd()
+              }}
             />
           </div>
         </div>
@@ -135,31 +173,49 @@ function AddDialog({ open, onOpenChange, title, onAdd }: AddDialogProps) {
 interface OptionItemProps {
   value: string
   label: string
+  type?: 'category' | 'payment'
   onEdit: () => void
   onDelete: () => void
   canDelete?: boolean
 }
 
-function OptionItem({ value, label, onEdit, onDelete, canDelete = true }: OptionItemProps) {
+function OptionItem({ value, label, type = 'category', onEdit, onDelete, canDelete = true }: OptionItemProps) {
+  const Icon = type === 'category' ? Layers : CreditCard
+
   return (
-    <div className="group relative p-3 border rounded-lg hover:shadow-md transition-all duration-200">
-      <div className="space-y-1">
-        <p className="font-medium">{label}</p>
-        <p className="text-xs text-muted-foreground">
+    <motion.div 
+      variants={itemVariants}
+      whileHover={{ y: -4, scale: 1.02 }}
+      className="group relative flex flex-col justify-center p-4 border rounded-2xl transition-all duration-300 backdrop-blur-md overflow-hidden bg-background/50 border-foreground/10 hover:border-primary/40 hover:shadow-[0_0_20px_rgba(var(--primary),0.15)] hover:bg-primary/5"
+    >
+      {/* Decorative Background Icon */}
+      <div className="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-10 transition-opacity pointer-events-none transform group-hover:scale-110 duration-500">
+        <Icon className="w-24 h-24 text-primary" />
+      </div>
+
+      <div className="relative z-10 flex flex-col">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="p-1.5 rounded-lg bg-foreground/5 text-foreground/70 group-hover:bg-primary/10 group-hover:text-primary transition-colors shadow-sm">
+            <Icon className="w-4 h-4" />
+          </div>
+          <p className="font-bold text-foreground text-sm tracking-tight truncate">{label}</p>
+        </div>
+        <p className="text-[10px] text-muted-foreground font-mono bg-foreground/5 w-fit px-2 py-0.5 rounded-md border border-foreground/5 truncate max-w-[80%] uppercase tracking-wider">
           {value}
         </p>
       </div>
-      <div className="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-        <Button variant="ghost" size="sm" onClick={onEdit} className="h-6 w-6 p-0">
+
+      <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+        <Button variant="outline" size="icon" onClick={onEdit} className="h-7 w-7 rounded-full bg-background/90 backdrop-blur shadow-sm hover:bg-primary hover:text-primary-foreground border-foreground/10 hover:border-primary">
           <Edit className="h-3 w-3" />
         </Button>
         {canDelete && (
-          <Button variant="ghost" size="sm" onClick={onDelete} className="h-6 w-6 p-0">
+          <Button variant="outline" size="icon" onClick={onDelete} className="h-7 w-7 rounded-full bg-background/90 backdrop-blur shadow-sm hover:bg-destructive hover:text-destructive-foreground border-foreground/10 hover:border-destructive">
             <Trash2 className="h-3 w-3" />
           </Button>
         )}
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -214,7 +270,8 @@ export function OptionsManager() {
       : paymentMethods.find(method => method.value === oldValue)
 
     if (!existingOption) {
-      throw new Error(`${type} option not found`)
+      toast({ title: t('common:error'), description: 'Option not found', variant: 'destructive' })
+      return
     }
 
     const newOption = { id: existingOption.id, value: newValue, label: newName }
@@ -292,7 +349,6 @@ export function OptionsManager() {
   const handleSaveAdd = async (name: string) => {
     const { type } = addDialog
     const value = generateValue(name)
-    // For new options, we don't need to provide an ID as the server will assign one
     const newOption = { id: 0, value, label: name }
 
     try {
@@ -319,78 +375,110 @@ export function OptionsManager() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24">
       <Tabs defaultValue="categories" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="categories">{t('settings:categories')}</TabsTrigger>
-          <TabsTrigger value="payment-methods">{t('settings:paymentMethods')}</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 p-1 bg-background/50 backdrop-blur-md border border-foreground/10 rounded-xl mb-6 shadow-sm">
+          <TabsTrigger value="categories" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none transition-all">
+            <Layers className="w-4 h-4 mr-2" />
+            {t('settings:categories')}
+          </TabsTrigger>
+          <TabsTrigger value="payment-methods" className="rounded-lg data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none transition-all">
+            <CreditCard className="w-4 h-4 mr-2" />
+            {t('settings:paymentMethods')}
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="categories">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>{t('settings:categories')}</CardTitle>
-                  <CardDescription>
-                    {t('settings:manageCategoriesDesc')}
-                  </CardDescription>
-                </div>
-                <Button onClick={() => handleAdd('category')}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t('settings:addCategory')}
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {categories.map((category) => (
-                  <OptionItem
-                    key={category.value}
-                    value={category.value}
-                    label={category.label}
-                    onEdit={() => handleEdit('category', category.value, category.label)}
-                    onDelete={() => handleDeleteClick('category', category.value, category.label)}
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+        <AnimatePresence mode="wait">
+          <TabsContent value="categories" className="mt-0" forceMount>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+              <Card className="border-foreground/10 bg-background/40 backdrop-blur-xl shadow-lg relative overflow-hidden group/card">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none opacity-50 transition-opacity group-hover/card:opacity-100" />
+                <CardHeader className="relative z-10 border-b border-foreground/5 bg-foreground/[0.02]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        <Tag className="w-5 h-5 text-primary" />
+                        {t('settings:categories')}
+                      </CardTitle>
+                      <CardDescription className="mt-1">
+                        {t('settings:manageCategoriesDesc')}
+                      </CardDescription>
+                    </div>
+                    <Button onClick={() => handleAdd('category')} className="bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary border border-primary/20 shadow-none transition-all">
+                      <Plus className="h-4 w-4 mr-2" />
+                      {t('settings:addCategory')}
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-6 relative z-10 min-h-[300px]">
+                  <motion.div 
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {categories.map((category) => (
+                      <OptionItem
+                        key={category.value}
+                        type="category"
+                        value={category.value}
+                        label={category.label}
+                        onEdit={() => handleEdit('category', category.value, category.label)}
+                        onDelete={() => handleDeleteClick('category', category.value, category.label)}
+                        canDelete={categories.length > 1}
+                      />
+                    ))}
+                  </motion.div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </TabsContent>
 
-        <TabsContent value="payment-methods">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>{t('settings:paymentMethods')}</CardTitle>
-                  <CardDescription>
-                    {t('settings:managePaymentMethodsDesc')}
-                  </CardDescription>
-                </div>
-                <Button onClick={() => handleAdd('payment')}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t('settings:addPaymentMethod')}
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {paymentMethods.map((method) => (
-                  <OptionItem
-                    key={method.value}
-                    value={method.value}
-                    label={method.label}
-                    onEdit={() => handleEdit('payment', method.value, method.label)}
-                    onDelete={() => handleDeleteClick('payment', method.value, method.label)}
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-
+          <TabsContent value="payment-methods" className="mt-0" forceMount>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+              <Card className="border-foreground/10 bg-background/40 backdrop-blur-xl shadow-lg relative overflow-hidden group/card">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none opacity-50 transition-opacity group-hover/card:opacity-100" />
+                <CardHeader className="relative z-10 border-b border-foreground/5 bg-foreground/[0.02]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        <CreditCard className="w-5 h-5 text-primary" />
+                        {t('settings:paymentMethods')}
+                      </CardTitle>
+                      <CardDescription className="mt-1">
+                        {t('settings:managePaymentMethodsDesc')}
+                      </CardDescription>
+                    </div>
+                    <Button onClick={() => handleAdd('payment')} className="bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary border border-primary/20 shadow-none transition-all">
+                      <Plus className="h-4 w-4 mr-2" />
+                      {t('settings:addPaymentMethod')}
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-6 relative z-10 min-h-[300px]">
+                  <motion.div 
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {paymentMethods.map((method) => (
+                      <OptionItem
+                        key={method.value}
+                        type="payment"
+                        value={method.value}
+                        label={method.label}
+                        onEdit={() => handleEdit('payment', method.value, method.label)}
+                        onDelete={() => handleDeleteClick('payment', method.value, method.label)}
+                        canDelete={paymentMethods.length > 1}
+                      />
+                    ))}
+                  </motion.div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </TabsContent>
+        </AnimatePresence>
       </Tabs>
 
       {/* Edit Dialog */}
