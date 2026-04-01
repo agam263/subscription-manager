@@ -5,7 +5,7 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden text-white selection:bg-purple-500/30 bg-transparent">
+    <div className="relative w-screen h-screen overflow-hidden dark:text-white text-black selection:bg-purple-500/30 bg-transparent">
       {/* Background is now global */}
 
       {/* Hero Content Overlay */}
