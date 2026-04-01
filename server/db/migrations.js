@@ -42,6 +42,11 @@ class DatabaseMigrations {
         version: 7,
         name: 'add_admin_users_table',
         up: () => this.migration_007_add_admin_users_table()
+      },
+      {
+        version: 8,
+        name: 'add_user_profile_fields',
+        up: () => this.migration_008_add_user_profile_fields()
       }
     ];
   }
@@ -656,6 +661,19 @@ class DatabaseMigrations {
         console.log('ℹ️  Updated existing admin timestamps');
       }
     }
+  }
+
+  // Migration 008: Add user profile fields
+  migration_008_add_user_profile_fields() {
+    console.log('📝 Adding user profile fields (name, email)...');
+    try {
+      this.db.exec(`ALTER TABLE users ADD COLUMN name TEXT;`);
+      console.log('✅ Added name');
+    } catch(e) {}
+    try {
+      this.db.exec(`ALTER TABLE users ADD COLUMN email TEXT;`);
+      console.log('✅ Added email');
+    } catch(e) {}
   }
 
   // Helper method to parse SQL statements properly
