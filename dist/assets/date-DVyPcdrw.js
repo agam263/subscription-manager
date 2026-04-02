@@ -1,0 +1,1 @@
+import{aw as n,u as a}from"./vendor-utils-fIHgyfai.js";const y=r=>{if(!r)return"";try{const t=typeof r=="string"?new Date(r):r;return n(t)?a(t,"yyyy-MM-dd"):""}catch{return""}},o=r=>{if(!r)return"";try{const t=typeof r=="string"?new Date(r):r;return n(t)?a(t,"MMM d, yyyy"):""}catch{return""}};export{y as a,o as f};

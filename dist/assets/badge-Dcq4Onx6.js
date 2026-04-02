@@ -1,0 +1,1 @@
+import{j as t}from"./vendor-ui-Dbx_n9oz.js";import{c as o,s as e}from"./charts-D-5oHTez.js";function n({className:s,variant:a,...r}){return t.jsx("div",{className:o(e({variant:a}),s),...r})}export{n as B};

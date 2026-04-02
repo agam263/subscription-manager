@@ -1,0 +1,1 @@
+const s=i=>({id:i.id,subscriptionId:i.subscription_id,subscriptionName:i.subscription_name,subscriptionPlan:i.subscription_plan,paymentDate:i.payment_date,amountPaid:i.amount_paid,currency:i.currency,billingPeriod:{start:i.billing_period_start,end:i.billing_period_end},status:i.status,notes:i.notes}),r=i=>i.map(s);export{r as t};
