@@ -1,8 +1,7 @@
 node_modules
 dist
 
-.env
-.env.development
+
 
 server/db/database.sqlite
 
