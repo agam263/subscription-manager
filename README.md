@@ -27,7 +27,8 @@ The core of the application. The Dashboard aggregates your spending data into be
 ### 4. Subscription Page
 A comprehensive catalog of all your active, trial, or cancelled subscriptions. You can filter, sort, and search your subscriptions, making it easy to manage your financial portfolio.
 
-![Subscription Page Screenshot](INSERT_SUBSCRIPTION_PAGE_IMAGE_URL_HERE)
+![Uploading Screenshot 2026-04-08 at 8.28.47 PM.png…]()
+
 
 ### 5. Add Subscription Page
 An intuitive interface to add new subscriptions. Track your plan details, billing cycle, renewal dates, associated categories, and payment methods.
