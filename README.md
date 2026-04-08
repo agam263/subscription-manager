@@ -9,7 +9,8 @@ Below is a detailed walkthrough of the primary pages in the application.
 ### 1. Landing Page
 Welcome to SubManager! The Landing Page features a stunning, animated interface that introduces the platform's capabilities with dynamic, hovering subscription cards and sleek typography.
 
-![Landing Page Screenshot](INSERT_LANDING_PAGE_IMAGE_URL_HERE)
+<img width="1679" height="928" alt="Screenshot 2026-04-08 at 8 27 25 PM" src="https://github.com/user-attachments/assets/e5e7dddc-392d-40f7-870a-50a5321ba67c" />
+
 
 ### 2. Login & Registration Page
 Secure access to your dashboard. This page provides a seamless authentication flow for both new user registrations and returning users.
