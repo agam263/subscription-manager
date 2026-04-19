@@ -1,0 +1,36 @@
+SubManager - Application Overview
+===================================
+
+SubManager is a full-stack web application for tracking, analyzing, and managing recurring expenses and subscriptions.
+It uses a modern glassmorphic UI and provides real-time multi-currency support.
+
+The application runs at http://localhost:5173 (frontend) and http://localhost:3001 (backend API).
+
+KEY FEATURES:
+- Subscription Tracking: Add, edit, delete, and organize subscriptions with billing cycles (monthly, quarterly, semiannual, yearly).
+- Multi-Currency Support: Track expenses in USD, EUR, GBP, CNY, JPY, CAD, AUD, TRY, HKD and more.
+- Real-Time Exchange Rates: Automatically fetches live exchange rates daily via the Frankfurter API.
+- Dashboard Analytics: Interactive charts showing monthly/yearly spending trends, category breakdowns, and upcoming renewals.
+- Smart Notifications: Automated email and Telegram alerts before subscription renewals (configurable advance days).
+- AI Chatbot Assistant: This bot - helps users understand how to use the app.
+- Import/Export: Import subscriptions from JSON files, export your data anytime.
+- Dark/Light Mode: Full theme switching support.
+
+TECH STACK:
+- Frontend: React + Vite + TypeScript + Tailwind CSS + Zustand (state management)
+- Backend: Node.js + Express.js, running on port 3001
+- Database: SQLite (file at ./db/database.sqlite)
+- AI: Python Flask chatbot (this bot) on port 5001
+
+PAGES IN THE APP:
+1. Landing Page - Introduction and login prompt for new visitors
+2. Login Page - Authentication for accessing the dashboard
+3. Dashboard (Home) - Spending overview, stats, upcoming renewals, category chart
+4. Subscriptions Page - Full catalog of all subscriptions with filtering, sorting, add/edit/delete
+5. Expense Reports Page - Detailed analytics and spending history
+6. Settings Page - App configuration (currency, notifications, theme, data management)
+7. Notification History Page - Log of all sent renewal notifications
+
+DEFAULT CREDENTIALS:
+- Username: admin
+- Password: admin

@@ -1,4 +1,6 @@
 flask==3.0.0
 flask_cors==4.0.0
 python-dotenv==1.0.0
-huggingface_hub==0.20.1
+openai>=1.0.0
+sentence-transformers>=2.0.0
+numpy>=1.24.0

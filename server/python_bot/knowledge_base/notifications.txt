@@ -1,0 +1,51 @@
+SubManager - Notification System
+==================================
+
+SubManager can automatically send you reminders before your subscriptions renew so you never get surprised by a charge.
+
+HOW NOTIFICATIONS WORK:
+- A background scheduler runs daily at the configured check time (default: 09:00 in your timezone).
+- It scans all active subscriptions and checks for renewals within the configured "advance days" window (default: 7 days).
+- For each subscription due within that window, it sends a reminder via the configured channels.
+
+SUPPORTED NOTIFICATION CHANNELS:
+1. Email (via SMTP):
+   - Sends an email with the subscription name, renewal date, and amount.
+   - Requires: EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD, EMAIL_FROM in your .env file.
+   - Supports Gmail and other SMTP providers.
+   - For Gmail: use an App Password (not your regular password) and EMAIL_PORT=465, EMAIL_SECURE=true.
+
+2. Telegram (via Bot):
+   - Sends a message to your Telegram account.
+   - Requires: TELEGRAM_BOT_TOKEN and your Telegram Chat ID.
+   - How to set up:
+     a. Message @BotFather on Telegram, create a new bot, copy the token.
+     b. Add the token to your .env file as TELEGRAM_BOT_TOKEN.
+     c. Message your bot to get your Chat ID, or use @userinfobot.
+     d. Enter the Chat ID in Settings > Notifications.
+
+CONFIGURING NOTIFICATIONS (via Settings > Notifications tab):
+- Toggle notifications on or off.
+- Set notification channels (email, telegram, or both).
+- Set advance days: how many days before renewal to send the reminder (1-30 days).
+- Set scheduler check time (e.g., "08:00" for 8 AM).
+- Set timezone (e.g., "Asia/Kolkata", "UTC", "America/New_York").
+- Toggle repeat notifications: if enabled, you get a reminder every day within the advance window. If disabled, only once.
+
+NOTIFICATION HISTORY:
+- All sent notifications are logged and can be viewed at Settings or the Notification History page.
+- The log shows: subscription name, channel used, time sent, and status (success/failure).
+
+ENVIRONMENT VARIABLES FOR NOTIFICATIONS (.env file):
+- TELEGRAM_BOT_TOKEN: Your Telegram bot token from @BotFather
+- EMAIL_HOST: SMTP server hostname (e.g., smtp.gmail.com)
+- EMAIL_PORT: SMTP port (465 for SSL, 587 for TLS)
+- EMAIL_SECURE: true for SSL (port 465), false for TLS (port 587)
+- EMAIL_USER: Your email address
+- EMAIL_PASSWORD: Your email password or app-specific password
+- EMAIL_FROM: Display name and email (e.g., "SubManager <you@gmail.com>")
+- NOTIFICATION_DEFAULT_CHANNELS: e.g., ["email"] or ["telegram"] or ["email","telegram"]
+- NOTIFICATION_DEFAULT_ADVANCE_DAYS: e.g., 7
+- SCHEDULER_CHECK_TIME: e.g., "09:00"
+- SCHEDULER_TIMEZONE: e.g., "UTC" or "Asia/Kolkata"
+- NOTIFICATION_DEFAULT_REPEAT_NOTIFICATION: true or false

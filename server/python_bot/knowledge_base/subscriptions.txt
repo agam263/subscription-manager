@@ -1,0 +1,81 @@
+SubManager - Subscriptions Page
+=================================
+
+The Subscriptions Page is your full catalog of all subscriptions. You can add, edit, delete, filter, sort, and manage every subscription here.
+
+URL: http://localhost:5173/subscriptions
+
+HOW TO ADD A NEW SUBSCRIPTION:
+1. Click the "+" (Plus) button in the top-right header area.
+2. A form/drawer opens. Fill in:
+   - Name: The service name (e.g., "Netflix", "Spotify")
+   - Plan: The plan tier (e.g., "Premium", "Basic")
+   - Amount: The cost per billing cycle
+   - Currency: The currency the subscription is billed in
+   - Billing Cycle: Choose from Monthly, Quarterly, Semiannual, or Yearly
+   - Category: Assign to a category (e.g., Entertainment, Productivity)
+   - Status: Active, Trial, or Cancelled
+   - Start Date: When the subscription started
+   - Next Billing Date: When the next payment is due
+   - Payment Method: How you pay (e.g., Credit Card, PayPal)
+   - Notes: Optional notes about the subscription
+3. Click "Save" or "Submit" to add the subscription.
+
+HOW TO EDIT A SUBSCRIPTION:
+1. Find the subscription card you want to edit.
+2. Click the edit (pencil) icon on the subscription card.
+3. The same form opens, pre-filled with existing data.
+4. Make changes and click "Save".
+   Note: Edits are applied optimistically (UI updates immediately, then syncs with backend).
+
+HOW TO DELETE A SUBSCRIPTION:
+1. Click the delete (trash) icon on the subscription card.
+2. A confirmation dialog appears asking you to confirm deletion.
+3. Click "Delete" to confirm. This action cannot be undone.
+
+SUBSCRIPTION STATUSES:
+- Active: Currently paying and using the subscription.
+- Trial: In a free or paid trial period.
+- Cancelled: No longer active; kept for record-keeping.
+
+BILLING CYCLES:
+- Monthly: Billed every month.
+- Quarterly: Billed every 3 months.
+- Semiannual: Billed every 6 months.
+- Yearly: Billed once per year (shown with a green badge).
+
+FILTERING SUBSCRIPTIONS:
+- By Status: Use the tab bar below the search to filter by All / Active / Trial / Cancelled.
+- By Category: Click the Tags icon in the search bar area to filter by one or more categories.
+- By Billing Cycle: Click the Calendar icon in the search bar area to filter by billing cycle.
+- Combined filters work together (AND logic).
+- To reset filters, click the "Reset" button inside each filter dropdown.
+
+SEARCHING:
+- Use the search bar to search by subscription name or plan name.
+- Search is case-insensitive and updates results in real time as you type.
+
+SORTING:
+- Click the Up/Down arrow button (next to filters) to sort by Next Billing Date.
+- Toggle between ascending (soonest first) and descending (latest first).
+
+IMPORT SUBSCRIPTIONS:
+1. Click the Upload (arrow up) icon in the top-right header.
+2. An import modal opens — select or drag a JSON file.
+3. The JSON must follow the SubManager subscription format.
+4. Click "Import" to bulk-add all subscriptions from the file.
+
+EXPORT SUBSCRIPTIONS:
+1. Click the Download (arrow down) icon in the top-right header.
+2. A JSON file named subscriptions-[date].json is downloaded to your computer.
+3. This file can be used to re-import data or keep a backup.
+
+MANUAL RENEWAL:
+- Open a subscription's detail view by clicking "View Details" on the card.
+- In the detail dialog, click "Manual Renew" to immediately advance the next billing date.
+- Use this if a subscription renewed but the date wasn't automatically updated.
+
+VIEW SUBSCRIPTION DETAILS:
+- Click "View Details" on any subscription card to open a detailed view.
+- Shows full information: name, plan, price, billing cycle, category, payment method, dates, notes.
+- From here you can also edit or manually renew the subscription.

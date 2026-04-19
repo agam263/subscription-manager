@@ -1,0 +1,46 @@
+SubManager - Settings Page
+===========================
+
+The Settings page lets you configure every aspect of SubManager. It is organized into 6 tabs.
+
+URL: http://localhost:5173/settings
+
+TAB 1 - GENERAL:
+- Theme: Switch between Light, Dark, or System (follows OS preference).
+- Language: Change the app's display language.
+- Other general display preferences.
+
+TAB 2 - CURRENCY:
+- Base Currency: The currency all amounts are converted and displayed in.
+  Supported: USD, EUR, GBP, CNY, JPY, CAD, AUD, TRY, HKD.
+- Exchange Rate Manager: Shows current exchange rates relative to your base currency.
+- Exchange rates are fetched automatically once daily from the Frankfurter API.
+- You can manually trigger a refresh of exchange rates from this tab.
+
+TAB 3 - OPTIONS:
+- Categories Manager: Add, rename, or delete custom subscription categories (e.g., Entertainment, Health, Business).
+- Payment Methods Manager: Add or remove payment methods (e.g., Credit Card, PayPal, Bank Transfer).
+- These custom options appear in the dropdown menus when adding/editing subscriptions.
+
+TAB 4 - NOTIFICATIONS:
+- Enable/Disable renewal notifications.
+- Notification Channels: Choose Email, Telegram, or both.
+- Advance Days: How many days before the renewal date you want to receive the alert (default: 7 days).
+- Scheduler Time: What time of day the scheduler checks and sends notifications (default: 09:00).
+- Timezone: Set your timezone for accurate scheduling.
+- Email Settings: Configure SMTP server, email address, password.
+- Telegram Settings: Configure Telegram Bot Token and your Chat ID.
+- To set up Telegram: create a bot via @BotFather, get the token, add it to .env or settings.
+- Repeat Notifications: Toggle whether to send a reminder every day or only once.
+
+TAB 5 - SECURITY:
+- Change Password: Update the admin account password.
+  Requirements: minimum 8 characters, must contain at least one letter and one number.
+  Steps: Enter current password, enter new password, confirm new password, click "Change Password".
+  The current default password is "admin" — it is strongly recommended to change this.
+
+TAB 6 - DATA:
+- Subscription Workflow: Click "Setup Default Subscriptions" to automatically add a pre-set list of common subscriptions to your account (region-localized). Skips any that already exist.
+- Data Management: Export all subscriptions to a JSON file, or import from a JSON file to restore/add data.
+- Reset Data: Permanently delete ALL subscriptions and reset ALL settings to defaults. This cannot be undone.
+  A confirmation modal with a random confirmation phrase is shown before resetting; you must type the phrase to confirm.

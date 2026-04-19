@@ -1,0 +1,46 @@
+SubManager - Dashboard (Home Page)
+====================================
+
+The Dashboard is the main page after logging in. It gives you a complete financial overview of your subscriptions.
+
+URL: http://localhost:5173/ (after login)
+
+WHAT YOU SEE ON THE DASHBOARD:
+
+1. STAT CARDS (top row, 3 cards):
+   - Monthly Spending: Total amount spent on subscriptions in the current calendar month.
+   - Yearly Spending: Total amount spent on subscriptions in the current calendar year.
+   - Active Subscriptions: Count of subscriptions currently marked as "active".
+   All amounts are shown in your selected base currency (configured in Settings > Currency).
+
+2. RECENTLY PAID (bottom left card):
+   - Shows subscriptions that were last billed in the past 7 days.
+   - Helps you see what you just paid for.
+   - Includes subscription name, amount, and billing date.
+
+3. UPCOMING RENEWALS (bottom center card):
+   - Shows subscriptions due for renewal within the next 7 days.
+   - Helps you anticipate upcoming charges.
+   - Includes subscription name, amount, and how many days until renewal.
+
+4. CATEGORY BREAKDOWN (bottom right card):
+   - A pie/donut chart of spending grouped by category (e.g., Entertainment, Productivity, Cloud).
+   - Visually shows which categories consume the most budget.
+
+5. REFRESH BUTTON (top-right of the header area):
+   - Clicking "Refresh" triggers manual renewal processing and refreshes all spending data.
+   - Use this to update the dashboard after adding new subscriptions or changing billing dates.
+
+6. ANIMATED BACKGROUND:
+   - The dashboard has a flowing laser/particle animation in the background for visual flair.
+
+HOW TO USE THE DASHBOARD:
+- The dashboard loads automatically when you log in.
+- Data updates automatically on page load.
+- Use the Refresh button to force re-fetch spending data and process any due renewals.
+- If the page is loading, you'll see skeleton placeholders while data fetches.
+
+SPENDING DATA:
+- Monthly and yearly spending figures are calculated server-side via the analytics API.
+- They account for all active subscriptions and their billing cycles.
+- Exchange rates are applied automatically to convert all amounts to your base currency.

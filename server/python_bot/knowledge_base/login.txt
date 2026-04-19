@@ -1,0 +1,57 @@
+SubManager - Login & Authentication
+=====================================
+
+SubManager uses a session-based authentication system. You must log in to access the dashboard and all features.
+
+LOGGING IN:
+1. Open http://localhost:5173 in your browser.
+2. You will see the Landing Page or be redirected to the Login Page.
+3. Enter your credentials:
+   - Username: admin (default)
+   - Password: admin (default)
+4. Click "Sign In" or "Login".
+5. On success, you are redirected to the Dashboard.
+
+DEFAULT CREDENTIALS:
+- Username: admin
+- Password: admin
+- It is strongly recommended to change the default password after first login.
+
+SESSION:
+- Your login session is maintained via a server-side session cookie.
+- You remain logged in as long as your browser keeps the cookie and the server is running.
+- Refreshing or navigating between pages does not require re-logging in.
+
+LOGGING OUT:
+- Click your profile/avatar icon or the logout button in the navigation sidebar to log out.
+- Logging out invalidates your session on the server.
+
+HOW TO CHANGE YOUR PASSWORD:
+1. Log in and go to Settings (gear icon in the sidebar).
+2. Click the "Security" tab.
+3. Enter your current password.
+4. Enter your new password (must be at least 8 characters and contain at least one letter and one number).
+5. Confirm the new password.
+6. Click "Change Password".
+7. If successful, you'll see a confirmation message.
+
+PASSWORD RULES:
+- Minimum 8 characters.
+- Must contain at least one letter (A-Z or a-z).
+- Must contain at least one number (0-9).
+- New password must be different from current password.
+- The new password and the confirm password fields must match.
+
+REGISTRATION:
+- SubManager does not support user registration. It is a single-admin application.
+- The admin account is the only account. Credentials are set via environment variables or the Settings page.
+
+ENVIRONMENT VARIABLES FOR AUTH (.env file):
+- ADMIN_USERNAME: The admin username (default: admin)
+- ADMIN_PASSWORD_HASH: A bcrypt hash of the admin password. Pre-set in the committed .env file.
+- SESSION_SECRET: A secret string used to sign the session cookie. Change this in production.
+
+FORGOT PASSWORD:
+- There is no "forgot password" flow in the UI.
+- To reset the password, update the ADMIN_PASSWORD_HASH in the .env file and restart the server.
+- Generate a new bcrypt hash using: node -e "const b=require('bcryptjs');console.log(b.hashSync('newpassword',12))"
