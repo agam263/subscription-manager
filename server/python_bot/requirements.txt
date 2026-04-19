@@ -2,5 +2,9 @@ flask==3.0.0
 flask_cors==4.0.0
 python-dotenv==1.0.0
 openai>=1.0.0
-sentence-transformers>=2.0.0
-numpy>=1.24.0
+# CPU-only torch — avoids pulling in ~2 GB of CUDA libraries.
+# The all-MiniLM-L6-v2 embedding model runs fine on CPU.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.2.2+cpu
+sentence-transformers>=2.0.0,<3.0.0
+numpy>=1.24.0,<2.0.0
