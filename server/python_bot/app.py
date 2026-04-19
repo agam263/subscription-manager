@@ -135,6 +135,7 @@ bot = SubManagerBot(retriever)
 
 
 # ── API Routes ────────────────────────────────────────────────────────────────
+@app.route('/', methods=['POST'])
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json
