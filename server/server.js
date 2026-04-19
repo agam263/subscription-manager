@@ -51,6 +51,14 @@ if (trustProxyConfig !== undefined) {
   app.set('trust proxy', 1);
 }
 
+// Proxy /api/chat to the Python Bot running on localhost:5001
+// MUST be registered before express.json() to prevent body streams from being consumed
+const { createProxyMiddleware } = require('http-proxy-middleware');
+app.use('/api/chat', createProxyMiddleware({ 
+  target: 'http://localhost:5001', 
+  changeOrigin: true 
+}));
+
 // Middleware
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
@@ -83,12 +91,7 @@ app.get('/api/health', requireLogin, (req, res) => {
 const apiRouter = express.Router();
 const protectedApiRouter = express.Router();
 
-// Proxy /api/chat to the Python Bot running on localhost:5001
-const { createProxyMiddleware } = require('http-proxy-middleware');
-app.use('/api/chat', createProxyMiddleware({ 
-  target: 'http://localhost:5001', 
-  changeOrigin: true 
-}));
+// Proxy middleware initialized above to avoid body consumption issues
 
 // Auth routes (no login required)
 app.use('/api/auth', createAuthRoutes(db));
