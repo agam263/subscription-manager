@@ -23,6 +23,7 @@ export function CategoryBreakdown({ data }: CategoryBreakdownProps) {
     .sort(([, a], [, b]) => b - a)
     .filter(([, value]) => value > 0)
     .map(([category]) => category)
+    
   
   // Get appropriate label for a category
   const getCategoryLabel = (categoryValue: string) => {
