@@ -17,10 +17,10 @@ class UserPreferenceService {
         try {
             const query = `SELECT language FROM settings WHERE id = 1`;
             const result = this.db.prepare(query).get();
-            return result ? result.language : 'zh-CN'; // Default fallback
+            return result ? result.language : 'en'; // Default fallback
         } catch (error) {
             console.error('Error getting user language:', error);
-            return 'zh-CN'; // Default fallback
+            return 'en'; // Default fallback
         }
     }
 
@@ -78,7 +78,7 @@ class UserPreferenceService {
                     currency: 'CNY',
                     theme: 'system',
                     show_original_currency: true,
-                    language: 'zh-CN'
+                    language: 'en'
                 };
             }
 
@@ -90,7 +90,7 @@ class UserPreferenceService {
                 currency: 'CNY',
                 theme: 'system',
                 show_original_currency: true,
-                language: 'zh-CN'
+                language: 'en'
             };
         }
     }
@@ -140,7 +140,7 @@ class UserPreferenceService {
                     preferences.currency || 'CNY',
                     preferences.theme || 'system',
                     preferences.show_original_currency !== undefined ? preferences.show_original_currency : 1,
-                    preferences.language || 'zh-CN'
+                    preferences.language || 'en'
                 );
             }
 
