@@ -69,16 +69,16 @@ class EmailService {
    * @param {string} to - Recipient email address
    */
   async sendTestMail(to) {
-    const now = new Date().toLocaleString(this.config.locale || 'zh-CN');
-    const subject = '订阅管理系统测试邮件 / Subscription Manager Test';
+    const now = new Date().toLocaleString(this.config.locale || 'en');
+    const subject = 'Subscription Manager Test Email';
     const html = `
-      <h2>订阅管理系统测试邮件</h2>
-      <p>这是一封来自订阅管理系统的测试邮件。如果您收到此邮件，说明邮件通知渠道配置正确。</p>
+      <h2>Subscription Manager Test Email</h2>
+      <p>This is a test email from the Subscription Management system. If you receive this, your email notification channel is configured correctly.</p>
       <hr/>
       <p><strong>Send time:</strong> ${now}</p>
-      <p>感谢您的使用！</p>
+      <p>Thank you for using the system!</p>
     `;
-    const text = `订阅管理系统测试邮件\n\n这是一封来自订阅管理系统的测试邮件。如果您收到此邮件，说明邮件通知渠道配置正确。\n\nSend time: ${now}`;
+    const text = `Subscription Manager Test Email\n\nThis is a test email from the Subscription Management system. If you receive this, your email notification channel is configured correctly.\n\nSend time: ${now}`;
 
     return this.sendMail({ to, subject, html, text });
   }
