@@ -6,3 +6,5 @@ dist
 server/db/database.sqlite
 
 .specstory
+
+.env
