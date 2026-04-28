@@ -235,7 +235,7 @@ class NotificationService {
 * Render message template 
 * @param {Object} params - template parameters 
 * @returns {string} Rendered message */
-    renderMessageTemplate({ subscription, notificationType, channel, language = 'zh-CN' }) {
+    renderMessageTemplate({ subscription, notificationType, channel, language = 'en' }) {
         try {
             // Get template
             const template = this.getTemplate(notificationType, language, channel);
@@ -304,7 +304,7 @@ class NotificationService {
 * @param {Object} subscription - subscription information 
 * @param {string} notificationType - notification type 
 * @returns {string} default message */
-    getDefaultContent(subscription, notificationType, language = 'zh-CN') {
+    getDefaultContent(subscription, notificationType, language = 'en') {
         const typeMessages = {
             renewal_reminder: `续订提醒: ${subscription.name} 将在 ${this.formatDate(subscription.next_billing_date)} 到期，金额: ${subscription.amount} ${subscription.currency}`,
             expiration_warning: `过期警告: ${subscription.name} 已在 ${this.formatDate(subscription.next_billing_date)} 过期`,
@@ -330,7 +330,7 @@ class NotificationService {
 
     /* * 
 * Get the default email subject */
-    getDefaultSubject(subscription, notificationType, language = 'zh-CN') {
+    getDefaultSubject(subscription, notificationType, language = 'en') {
         const subjects = {
             renewal_reminder: language.startsWith('en') ? `Renewal Reminder - ${subscription.name}` : `续订提醒 - ${subscription.name}`,
             expiration_warning: language.startsWith('en') ? `Subscription Expired - ${subscription.name}` : `订阅已过期 - ${subscription.name}`,
@@ -419,15 +419,15 @@ class NotificationService {
 * Format date 
 * @param {string} dateString - date string 
 * @returns {string} formatted date */
-    formatDate(dateString, language = 'zh-CN') {
+    formatDate(dateString, language = 'en') {
         try {
             if (!dateString) {
-                const locale = language || 'zh-CN';
+                const locale = language || 'en';
                 return locale.startsWith('en') ? 'Unknown date' : '未知日期';
             }
 
             const date = new Date(dateString);
-            const locale = language || 'zh-CN';
+            const locale = language || 'en';
             return date.toLocaleDateString(locale);
         } catch (error) {
             return dateString;
@@ -494,14 +494,37 @@ class NotificationService {
                 return { success: false, message: 'Channel not configured' };
             }
 
-            if (channelType === 'telegram') {
-                const chatId = this.getRecipient(channelConfig);
-                return await this.telegramService.sendTestMessage(chatId);
-            }
-
-            if (channelType === 'email') {
-                const address = this.getRecipient(channelConfig);
-                return await this.emailService.sendTestMail(address);
+            if (channelType === 'telegram' || channelType === 'email') {
+                const recipient = this.getRecipient(channelConfig);
+                
+                // Create mock subscription to preview exactly what real users will see
+                const mockSub = {
+                    name: 'Premium Cloud Workspace Analytics',
+                    amount: '19.99',
+                    currency: 'USD',
+                    next_billing_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+                    payment_method_label: 'Visa ending in 4242',
+                    plan: 'Pro Professional Tier'
+                };
+                
+                const { content, subject } = this.renderMessageTemplate({
+                    subscription: mockSub,
+                    notificationType: 'renewal_reminder',
+                    channel: channelType,
+                    language: 'en'
+                });
+                
+                if (channelType === 'email') {
+                    return await this.sendEmailNotification({
+                        recipient: recipient,
+                        subscription: mockSub,
+                        notificationType: 'renewal_reminder',
+                        subject: `[PREVIEW] ${subject}`,
+                        htmlContent: content
+                    });
+                } else {
+                    return await this.telegramService.sendMessage(recipient, `[PREVIEW]\n\n${content}`);
+                }
             }
 
             return { success: false, message: 'Unsupported channel type' };
