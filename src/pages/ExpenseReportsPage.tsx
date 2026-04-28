@@ -364,27 +364,9 @@ export function ExpenseReportsPage() {
   }, [currentYearlyDateRange, userCurrency])
 
   return (
-    <div className="relative min-h-full space-y-6 pb-10">
-      {/* Modern animated backdrop */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden dark:bg-[#050510]">
-        <div className="absolute inset-0 opacity-40 mix-blend-screen" style={{ width: '100vw', height: '100vh', position: 'absolute' }}>
-          <LaserFlow
-            color="#A855F7"
-            wispDensity={1.2}
-            flowSpeed={0.3}
-            verticalSizing={2.5}
-            horizontalSizing={1.5}
-            fogIntensity={0.6}
-            fogScale={0.2}
-            wispSpeed={8}
-            wispIntensity={3}
-            flowStrength={0.2}
-            decay={1.2}
-            horizontalBeamOffset={0}
-            verticalBeamOffset={0}
-          />
-        </div>
-      </div>
+    <div className="relative min-h-full space-y-6 pb-10 bg-[#FAFAFA] dark:bg-[#111111]">
+      {/* Modern solid backdrop matching reference */}
+      <div className="fixed inset-0 pointer-events-none -z-10 bg-[#FAFAFA] dark:bg-[#111111]" />
 
       {/* Header */}
       <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between z-10 relative px-2">
@@ -451,18 +433,18 @@ export function ExpenseReportsPage() {
           className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 mt-6 w-full relative z-10"
         >
           {/* Main Visual: Expense Trends Chart - Spans 8 cols */}
-          <div className="col-span-1 lg:col-span-8 flex flex-col relative group rounded-[24px] bg-background/40 dark:bg-white/[0.02] backdrop-blur-[20px] border border-border/50 dark:border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:border-border dark:hover:border-white/10 transition-colors duration-500 overflow-hidden">
+          <div className="col-span-1 lg:col-span-8 flex flex-col relative group rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 shadow-sm transition-colors duration-500 overflow-hidden">
             
             {/* Minimal Inline Top Controls */}
-            <div className="absolute top-4 right-4 z-20 flex gap-1 bg-background/50 dark:bg-white/[0.04] p-1 rounded-xl border border-border/50 dark:border-white/5 backdrop-blur-md">
+            <div className="absolute top-4 right-4 z-20 flex gap-1 bg-[#FAFAFA] dark:bg-[#2A2A2C] p-1 rounded-xl border border-black/5 dark:border-white/5">
               <button
-                className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all duration-300 flex-1 ${activeTab === 'monthly' ? 'bg-foreground/10 dark:bg-white/10 text-foreground dark:text-white shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5 dark:hover:bg-white/5'}`}
+                className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all duration-300 flex-1 ${activeTab === 'monthly' ? 'bg-white dark:bg-[#3A3A3D] text-black dark:text-white shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5'}`}
                 onClick={() => setActiveTab('monthly')}
               >
                 {t('monthly')}
               </button>
               <button
-                className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all duration-300 flex-1 ${activeTab === 'yearly' ? 'bg-foreground/10 dark:bg-white/10 text-foreground dark:text-white shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5 dark:hover:bg-white/5'}`}
+                className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all duration-300 flex-1 ${activeTab === 'yearly' ? 'bg-white dark:bg-[#3A3A3D] text-black dark:text-white shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5'}`}
                 onClick={() => setActiveTab('yearly')}
               >
                 {t('yearly')}
@@ -488,7 +470,7 @@ export function ExpenseReportsPage() {
           </div>
 
           {/* Side Visual: Spending By Category - Spans 4 cols */}
-          <div className="col-span-1 lg:col-span-4 flex flex-col relative rounded-[24px] bg-background/40 dark:bg-white/[0.02] backdrop-blur-[20px] border border-border/50 dark:border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:border-border dark:hover:border-white/10 transition-colors duration-500 overflow-hidden">
+          <div className="col-span-1 lg:col-span-4 flex flex-col relative rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 shadow-sm transition-colors duration-500 overflow-hidden">
             <div className="flex-1 w-full min-h-[400px] lg:min-h-[440px]">
               {activeTab === 'monthly' ? (
                 isLoadingCategoryExpenses ? (

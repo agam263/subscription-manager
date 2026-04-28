@@ -54,10 +54,10 @@ export function CategoryPieChart({ data, currency, className, descriptionKey }: 
   }, {} as ChartConfig)
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle className="text-lg">{t('chart.spendingByCategory')}</CardTitle>
-        <CardDescription>{t(descriptionKey)}</CardDescription>
+    <Card className={`border-0 shadow-none bg-transparent ${className || ''}`}>
+      <CardHeader className="px-6 pt-6">
+        <CardTitle className="text-lg text-foreground font-bold tracking-wide">{t('chart.spendingByCategory')}</CardTitle>
+        <CardDescription className="text-muted-foreground mt-1">{t(descriptionKey)}</CardDescription>
       </CardHeader>
       <CardContent className="px-2 sm:px-6">
         {data.length === 0 ? (

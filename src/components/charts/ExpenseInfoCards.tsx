@@ -86,46 +86,71 @@ export function ExpenseInfoCards({
 
   return (
     <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 relative z-10 w-full ${className}`}>
-      {metrics.map((m, i) => (
-        <motion.div
-          key={i}
-          whileHover={{ y: -5, scale: 1.01 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          className="relative flex flex-col p-5 lg:p-6 rounded-[24px] bg-gradient-to-b from-background/50 dark:from-white/[0.04] to-transparent backdrop-blur-xl border border-border/50 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.2)] hover:border-border dark:hover:border-white/20 overflow-hidden cursor-pointer group"
-          onClick={() => m.data && handleViewDetails(m.data)}
-        >
-          {/* Subtle gradient background */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${m.bg} opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}></div>
-
-          <div className="flex justify-between items-start mb-6 lg:mb-8 relative z-10">
-            <div className="flex flex-col gap-1">
-              <span className="text-sm font-semibold text-foreground/80 tracking-wide">{m.title}</span>
-              {m.data ? (
-                <span className="text-xs font-medium text-muted-foreground">{m.data.period}</span>
-              ) : (
-                <span className="text-xs font-medium text-muted-foreground">No Data</span>
-              )}
-            </div>
-            <div className="relative p-2.5 rounded-2xl bg-foreground/5 dark:bg-white/[0.05] border border-border/50 dark:border-white/10 group-hover:bg-foreground/10 dark:group-hover:bg-white/[0.1] transition-colors duration-300">
-              <div className="absolute inset-0 blur-[12px] rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ backgroundColor: m.glow }}></div>
-              <m.icon className={`h-5 w-5 ${m.color} relative z-10`} />
-            </div>
-          </div>
-
-          <div className="mt-auto flex items-end justify-between relative z-10 gap-4">
-            <span className="font-mono text-3xl lg:text-4xl font-bold tracking-tight text-foreground drop-shadow-sm truncate">
-              {m.data ? formatCurrencyAmount(m.data.totalSpent, currency) : "$0.00"}
-            </span>
-            
-            {m.trend && (
-              <div className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${m.trend.isUp ? 'bg-red-500/10 text-red-500 border border-red-500/20' : m.trend.isDown ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-foreground/5 text-muted-foreground border border-border/50 dark:bg-white/5 dark:text-white/50 dark:border-white/10'}`}>
-                {m.trend.isUp ? <ArrowUpRight className="h-3 w-3" /> : m.trend.isDown ? <ArrowDownRight className="h-3 w-3" /> : null}
-                <span>{m.trend.value}%</span>
+      {metrics.map((m, i) => {
+        const isPrimary = i === 0; // First card is the main orange card
+        return (
+          <motion.div
+            key={i}
+            whileHover={{ y: -4, scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className={`relative flex flex-col p-5 lg:p-6 rounded-[24px] shadow-sm overflow-hidden cursor-pointer group ${
+              isPrimary 
+                ? 'bg-gradient-to-br from-[#FF6B35] to-[#E84C15] text-white shadow-[#FF6B35]/20 shadow-lg border-none' 
+                : 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white border border-black/5 dark:border-white/5'
+            }`}
+            onClick={() => m.data && handleViewDetails(m.data)}
+          >
+            <div className="flex justify-between items-start mb-6 lg:mb-8 relative z-10">
+              <div className="flex items-center gap-3">
+                <div className={`p-2.5 rounded-xl flex items-center justify-center ${
+                  isPrimary ? 'bg-white/20' : 'bg-[#FAFAFA] dark:bg-[#2A2A2C]'
+                }`}>
+                  <m.icon className={`h-5 w-5 ${isPrimary ? 'text-white' : 'text-muted-foreground dark:text-white/70'}`} />
+                </div>
+                <div className="flex flex-col">
+                  <span className={`text-sm font-bold tracking-wide ${isPrimary ? 'text-white' : 'text-foreground/90'}`}>{m.title}</span>
+                  {m.data ? (
+                    <span className={`text-xs font-medium ${isPrimary ? 'text-white/80' : 'text-muted-foreground'}`}>{m.data.period}</span>
+                  ) : (
+                    <span className={`text-xs font-medium ${isPrimary ? 'text-white/80' : 'text-muted-foreground'}`}>No Data</span>
+                  )}
+                </div>
               </div>
-            )}
-          </div>
-        </motion.div>
-      ))}
+              <div className={`p-1 rounded-full ${isPrimary ? 'text-white/70 hover:bg-white/20' : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/10'} transition-colors`}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </div>
+            </div>
+
+            <div className="mt-auto flex flex-col relative z-10 gap-2">
+              <span className={`font-mono text-3xl lg:text-4xl font-bold tracking-tight ${isPrimary ? 'text-white' : 'text-foreground'}`}>
+                {m.data ? formatCurrencyAmount(m.data.totalSpent, currency) : "$0.00"}
+              </span>
+              
+              <div className="flex items-center justify-between mt-1">
+                {m.trend ? (
+                  <div className={`flex items-center gap-1 text-xs font-semibold ${
+                    isPrimary 
+                      ? 'text-white/90' 
+                      : m.trend.isUp 
+                        ? 'text-red-500' 
+                        : m.trend.isDown 
+                          ? 'text-emerald-500' 
+                          : 'text-muted-foreground'
+                  }`}>
+                    {m.trend.isUp ? <ArrowUpRight className="h-3 w-3" /> : m.trend.isDown ? <ArrowDownRight className="h-3 w-3" /> : null}
+                    <span>{m.trend.value}% ↑</span>
+                  </div>
+                ) : (
+                  <div className="h-4"></div>
+                )}
+                <span className={`text-xs font-medium group-hover:underline ${isPrimary ? 'text-white' : 'text-muted-foreground'}`}>
+                  See details →
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )
+      })}
 
       {/* Detail Dialog */}
       {selectedPeriod && (

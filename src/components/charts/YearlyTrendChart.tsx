@@ -128,10 +128,10 @@ export function YearlyTrendChart({ data, categoryData, currency, className }: Ye
           <Line
             type="monotone"
             dataKey="amount"
-            stroke="var(--color-amount)"
-            strokeWidth={2}
-            dot={{ fill: "var(--color-amount)", strokeWidth: 2, r: 4 }}
-            activeDot={{ r: 6, stroke: "var(--color-amount)", strokeWidth: 2 }}
+            stroke="#FF6B35"
+            strokeWidth={3}
+            dot={{ fill: "#FF6B35", strokeWidth: 2, r: 4 }}
+            activeDot={{ r: 6, stroke: "#FF6B35", strokeWidth: 2 }}
           />
         </LineChart>
       )
@@ -217,11 +217,11 @@ export function YearlyTrendChart({ data, categoryData, currency, className }: Ye
   }
   
   return (
-    <Card className={className}>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
+    <Card className={`border-0 shadow-none bg-transparent ${className || ''}`}>
+      <CardHeader className="flex flex-row items-center justify-between pb-2 px-6 pt-6">
         <div>
-          <CardTitle className="text-lg">{t('chart.yearlyTrends')}</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-lg text-foreground font-bold tracking-wide">{t('chart.yearlyTrends')}</CardTitle>
+          <CardDescription className="text-muted-foreground mt-1">
             {chartType === 'line' 
               ? t('chart.annualSpendingOverTime')
               : t('chart.annualSpendingByCategory')
