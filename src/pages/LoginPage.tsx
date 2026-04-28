@@ -135,7 +135,7 @@ export default function LoginPage() {
                 </div>
                 {(localError || error) && (
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-center">
-                    <p className="text-sm text-red-400 font-medium">Registration failed. Try a different username/email.</p>
+                    <p className="text-sm text-red-400 font-medium">{error || "Registration failed. Please try again."}</p>
                   </div>
                 )}
                 <Button 
