@@ -28,7 +28,10 @@ function createAuthRoutes(db) {
             userService.recordLastLogin(user.username);
 
             req.session.user = { username: user.username, role: user.role, name: user.name, email: user.email };
-            return res.json({ message: 'Logged in', user: req.session.user });
+            req.session.save((err) => {
+                if (err) return res.status(500).json({ message: 'Session save failed' });
+                return res.json({ message: 'Logged in', user: req.session.user });
+            });
         } catch (err) {
             return res.status(500).json({ message: 'Login failed' });
         }
@@ -59,7 +62,10 @@ function createAuthRoutes(db) {
 
             // auto-login after register
             req.session.user = { username: inputEmail, role: 'user', name: name.trim(), email: inputEmail };
-            return res.status(201).json({ message: 'Registered successfully', user: req.session.user });
+            req.session.save((err) => {
+                if (err) return res.status(500).json({ message: 'Session save failed' });
+                return res.status(201).json({ message: 'Registered successfully', user: req.session.user });
+            });
         } catch (err) {
             console.error(err);
             return res.status(500).json({ message: 'Registration failed' });
